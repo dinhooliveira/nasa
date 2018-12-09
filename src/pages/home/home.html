@@ -14,11 +14,17 @@
 
 
   <ion-grid>
-    <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
+    <ion-searchbar (ionInput)="search($event)" placeholder="Pesquise imagens"></ion-searchbar>
 
-    <ion-card *ngFor="let dado of dados">
+    <ion-card *ngFor="let dado of dados" >
 
-      <img src="{{dado.links[0].href}}" />
+      <img  *ngIf="dado.data['0'].media_type == 'image'" src="{{dado.links['0'].href}}"/>
+     
+      <video controls width="100%" *ngIf="dado.data['0'].media_type == 'video'" >
+        <source type="video/mp4"  src="{{dado.links['0'].href.toString().replace('.srt','~orig.mp4')}}"/>
+      </video>
+      
+
       <ion-card-content>
         <ion-card-title>
           {{dado.data[0].title}}

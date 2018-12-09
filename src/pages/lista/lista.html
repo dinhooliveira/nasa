@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Lista</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header> Ejeção de Massa Coronal (CME) </ion-card-header>
+
+    <ion-item>
+
+      <ion-label>Data Inicial</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"  [(ngModel)]="date_start"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Data Final</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"  [(ngModel)]="date_end"></ion-datetime>
+    </ion-item>
+
+    <div padding>
+      <button ion-button block (click)="valida()">Pesquisar</button>
+    </div>
+  </ion-card>
+
+  <ion-card *ngFor="let d of dados">
+    <ion-card-header>
+       {{d.activityID}}
+    </ion-card-header>
+    <ion-card-content>
+    
+      <p>{{d.startTime}}</p>
+      <p>{{d.catalog}}</p>
+      <h1>Note</h1>
+      <p>{{d.note}}</p>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

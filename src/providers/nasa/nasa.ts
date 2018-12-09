@@ -1,5 +1,6 @@
 import { HttpClient } from  '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LoadingController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 /*
@@ -12,14 +13,16 @@ import 'rxjs/add/operator/map';
 export class NasaProvider {
   private KEY = "ejp2JCf0kESngXxA8qg2GMbNvnl7jdGI60ers2pM";
   private URL_API ="https://images-api.nasa.gov/";
-  private URL_API2 = "https://api.nasa.gov/neo/rest/v1/feed?";
-  constructor(public http: HttpClient) {
+  private URL_API2 = "https://api.nasa.gov/DONKI/CME?";
+  constructor(
+    public http: HttpClient,
+    public loadingCtrl: LoadingController
+  ) {
     console.log('Hello NasaProvider Provider');
   }
   
   imagens(search:any=""){
     return new Promise((resolve,reject)=>{
-
       let url = this.URL_API+"search?q="+search;
       this.http.get(url).subscribe((result:any)=>{
         resolve(result)
@@ -31,14 +34,22 @@ export class NasaProvider {
    
   }
 
-  feed(date_start:Date,date_end:Date){
+  feed(date_start,date_end){
     return new Promise((resolve,reject)=>{
 
-      let url = this.URL_API2+"start_date="+date_start+"date_end"+date_end+"&api_key="+this.KEY;
+      let loading = this.loadingCtrl.create({
+        content: 'Procurando...',
+        duration: 10000
+      });
+      loading.present();
+
+      let url = this.URL_API2+"startDate="+date_start+"&endDate"+date_end+"&api_key="+this.KEY;
       this.http.get(url).subscribe((result:any)=>{
+        loading.dismiss();
         resolve(result)
       },
       (error)=>{
+        loading.dismiss();
           reject(error);
       })
     });

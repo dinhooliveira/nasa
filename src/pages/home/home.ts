@@ -17,7 +17,6 @@ export class HomePage {
   }
 
   public  dados:any = [];
-  public next:any=false;
 
    search(search:any=""){
      let s = search != "" ? search.target.value : "";
@@ -25,10 +24,6 @@ export class HomePage {
     .then((result:any)=>{
       console.log(result);
       this.dados = result.collection.items;
-      this.next = result.collection.links.next;
-      console.log(this.next);
-
-
     })
     .catch((error:any)=>{
       
